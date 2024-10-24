@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <title>Storage Hub</title>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #1183C3;
+            color: white;
+            width: 100%;
+            height: 120px;
+        }
+        .navbar-nav {
+            display: flex;
+            justify-content: center;
+            flex: 1;
+            padding-bottom: 18px;
+        }
+        .navbar-nav .nav-link {
+            color: white;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ddd;
+        }
+        .navbar-toggler {
+            border: none;
+        }
+        .navbar-toggler:focus {
+            outline: none;
+        }
+        .stock {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 50px;
+        }
+        .stock-text {
+            color: #09344D;
+            font-family: Poppins;
+            font-size: 60px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            width: 240px;
+            height: 90px;
+        }
+        .todas {
+            display: flex;
+            gap: 111px;
+            justify-content: center;
+        }
+        .todas div {
+            transition: transform 0.3s ease;
+        }
+        .todas div:hover {
+            transform: translateY(-10px);
+        }
+        .mobilia {
+            width: 134px;
+            height: 78px;
+        }
+        main {
+            flex: 1;
+        }
+        .text{
+            width: 126px;
+            height: 34px;
+            font-family: Poppins;
+            font-size: 30px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+        .limpeza {
+            color: black;
+            text-decoration: none;
+        }
+        .stock {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 50px;
+        }
+        .stock-text {
+            color: #09344D;
+            font-family: Poppins;
+            font-size: 60px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            width: 240px;
+            height: 90px;
+        }
+
+        .card{
+            width: 213px;
+            height: 180px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand me-auto" href="{{url_for('homepage')}}"><img src="../static/img/logo_storage.png" alt="Storage Hub Logo"></a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto" style="padding-top: 20px;">
+                        <div class="center" style="display: flex; align-items: center; width: 30%;">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{url_for('homepage')}}" style="font-weight: 400;">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url_for('home_estoque')}}">Estoque</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url_for('recebidos')}}" style="font-weight: 400;">Recebidos</a>
+                        </div>
+                    </ul>
+                    <a href="{{url_for('logout')}}" style="
+                    background-color: #1183C3;
+                    color: white;
+                    width: 70px;
+                    height: 40px;
+                    border: 2px solid white;
+                    text-decoration: none;
+                    border-radius: 50px;"><p class="sair" style="padding: 7px 0px 0px 18px;">Sair</p></a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div>
+            <section class="stock">
+                <div>
+                    <h1 class="stock-text">Mobília</h1>
+                </div>
+            </section>
+            
+                <div class="cards" style="display: flex; gap: 100px; align-items: center; justify-content: center; flex-wrap: wrap;">
+                    {% for linha in estoque %}
+                    <div class="card" style="background-color:#D9D9D9; height: 220px; margin-bottom: 40px;">
+                        <div class="linha-card">
+                
+                        <tr>
+                            <div class="quebra" style="display: flex; flex-direction: column; height: 170px; justify-content: space-between;">
+                                <div class="space" style="margin-left: 10px;">
+                                <div class="primeiro">
+                                    <td ><strong>Produto:<br></strong>{{linha.nome_produto}}</td>
+                                </div>
+                                <div class="segunda" style="margin-top: 10px;">
+                                    <td><strong>Descrição:<br></strong>{{linha.descricao_produto}}</td>
+                                </div>
+                                <div class="segunda" style="margin-top: 10px;">
+                                    <td><strong>Data:<br></strong>{{ linha.data_recebimento.strftime('%d/%m/%Y') }}</td>
+                                </div>
+                            </div>
+                                <div class="botao" style="background-color: #1183C3; width: 70px; padding: 8px; border-radius: 20px; margin-left: 70px; margin-top: 10px;">
+                                    <td><a href="{{url_for('estoqueDetail', id=linha.id)}}" style="text-decoration: none; color:white;">Retirar</a></td>
+
+                                </div>
+                            </div>
+                        </tr>
+                        </div>
+                    </div>
+                    {% endfor%}
+                </div>
+        </div>
+
+
+    </main>
+    <footer style="background-color: #1183C3; color: white; padding: 20px 0;text-align: center;">&copy; 2024 Storage Hub</footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/6e993e0778.js" crossorigin="anonymous"></script>
+</body>
+</html>
